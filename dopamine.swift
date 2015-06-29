@@ -19,7 +19,8 @@ class Dopamine{
     var credentials = [String:String]()
     var rewardFunctions = [String]()
     var feedbackFunctions = [String]()
-    var actionPairings = [String: [String: [String]]]()
+//    var actionPairings = [[String: [String: [String]]]]()
+    var actionPairings = [AnyObject]()
     var actionNames = [String]()
     var buildID:String = ""
     var ClientOSVersion = ""
@@ -42,6 +43,7 @@ class Dopamine{
     
     func pairReinforcements (actionName: String, rewardFunctions: [String], feedbackFunctions: [String])
     {
+        
         //check actions, reward functions, feedback functions, pair.
         var haventSeenAction = true
         var uniqueRewards = [String]()
@@ -99,27 +101,36 @@ class Dopamine{
         
         if(haventSeenAction)
         {
-            //pair action to reinforcement
-            println("This is the first time that pairReinforcements has been called for \(actionName)")
-            self.actionPairings[actionName] = ["rewardFunctions": uniqueRewards, "feedbackFunctions": uniqueFeedbacks]
-            println(self.actionPairings)
+
+            var reinforcers = [[String:AnyObject]]()
+            for thisFunction in uniqueRewards
+            {
+                var newReinforcer = ["functionName": thisFunction, "type":"Reward", "constraint":[], "objective":[]]
+                reinforcers.append(newReinforcer)
+            }
+            
+            for thisFunction in uniqueFeedbacks
+            {
+                var newReinforcer = ["functionName": thisFunction, "type":"Feedback", "constraint":[], "objective":[]]
+                reinforcers.append(newReinforcer)
+            }
+
+            var newActionPairing = ["actionName":actionName, "reinforcers":reinforcers]
+            self.actionPairings.append(newActionPairing)
+
         }
         else
         {
             println("This is NOT first time that pairReinforcements has been called for \(actionName)")
         }
         
-        println("self.actionNames is now: \(self.actionNames)")
-        println("self.feedbackFunctions is now: \(self.feedbackFunctions)")
-        println("self.rewardFunctions is now: \(self.rewardFunctions)")
     }
     
     func buildPayload(callType: String, eventName: String, identity: [[String:String]]) -> ()
     {
         //calculate build
-        println("in buildPayload. about to print build:")
-        println(self.actionPairings.description)
         self.buildID = self.actionPairings.description.sha1()!
+        println(self.buildID)
         var timeNow = NSDate().timeIntervalSince1970 * 1000
         var appID = self.credentials["appID"]!
         
@@ -147,11 +158,10 @@ class Dopamine{
             parameters["eventName"] = eventName
         }
         
+        println(parameters)
+        
         //send API call
-//        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/\(callType)/", parameters: parameters as! [String : AnyObject], encoding: .JSON).responseJSON { (_, _, JSON, _) in
-//            if(callType == "reinforce")
-
-        var response = Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/\(callType)/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
+        var request = Alamofire.request(.POST, "https://staging.usedopamine.com/v2/app/\(appID)/\(callType)/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
             if(callType == "reinforce")
             {
                 self.handleReinforceResponse(JSON!)
@@ -159,6 +169,7 @@ class Dopamine{
             else
             {
                 println(JSON)
+                
             }
         }
         

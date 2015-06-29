@@ -24,13 +24,13 @@
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
 		<key>67620B5EFA902936DF04070AF595B76AB0333747</key>
-		<string>../..Alamofire/</string>
+		<string>../..Alamofire</string>
 		<key>80739E9618C82A5630A13DE711584E8FC42EBB11</key>
 		<string>../..</string>
 		<key>C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53</key>
-		<string>../..CryptoSwift/</string>
+		<string>../..CryptoSwift</string>
 		<key>C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3</key>
-		<string>../..SwiftyJSON/</string>
+		<string>../..SwiftyJSON</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/DopamineLabs/DopamineAPI_Swift-Client.git</string>
@@ -44,22 +44,6 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>67620B5EFA902936DF04070AF595B76AB0333747</string>
-			<key>IDESourceControlWCCName</key>
-			<string>Alamofire</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53</string>
-			<key>IDESourceControlWCCName</key>
-			<string>CryptoSwift</string>
-		</dict>
-		<dict>
-			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
-			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>80739E9618C82A5630A13DE711584E8FC42EBB11</string>
 			<key>IDESourceControlWCCName</key>
 			<string>DopamineAPI_Swift-Client</string>
@@ -68,9 +52,25 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>67620B5EFA902936DF04070AF595B76AB0333747</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DopamineAPI_Swift-ClientAlamofire</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C3D8ED1CB28D809ADCE2C0DE74935E8A502ACD53</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DopamineAPI_Swift-ClientCryptoSwift</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>C861FC00CEE0F6A6BE81FCFF6785FAA78C58EBB3</string>
 			<key>IDESourceControlWCCName</key>
-			<string>SwiftyJSON</string>
+			<string>DopamineAPI_Swift-ClientSwiftyJSON</string>
 		</dict>
 	</array>
 </dict>

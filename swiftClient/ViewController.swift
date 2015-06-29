@@ -14,6 +14,9 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dopamineObj.pairReinforcements("newAction1", rewardFunctions: ["newReinforcement", "otherReinforcement", "newReinforcement"], feedbackFunctions:["feedback0"])
+        dopamineObj.pairReinforcements("newAction2", rewardFunctions: ["newReinforcement", "otherReinforcement", "newReinforcement"], feedbackFunctions:["feedback0"])
+        
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -24,9 +27,6 @@ class ViewController: UIViewController {
 
     @IBAction func startButton(sender: AnyObject)
     {
-        dopamineObj.pairReinforcements("newAction1", rewardFunctions: ["newReinforcement", "otherReinforcement", "newReinforcement"], feedbackFunctions:["feedback0"])
-        dopamineObj.pairReinforcements("newAction2", rewardFunctions: ["newReinforcement", "otherReinforcement", "newReinforcement"], feedbackFunctions:["feedback0"])
-        
         dopamineObj.initialize()
     }
     
@@ -35,10 +35,9 @@ class ViewController: UIViewController {
         dopamineObj.track("testEvent", identity: [["userID": "1138"]])
     }
     
-    
     @IBAction func reinforceButton(sender: AnyObject) {
         dopamineObj.reinforce("newAction1", identity: [["userID": "1138"]])
     }
-
+    
 }
 
