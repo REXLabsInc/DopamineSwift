@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    @IBAction func initButton(sender: AnyObject)
+    @IBAction func startButton(sender: AnyObject)
     {
         dopamineObj.pairReinforcements("newAction1", rewardFunctions: ["newReinforcement", "otherReinforcement", "newReinforcement"], feedbackFunctions:["feedback0"])
         dopamineObj.pairReinforcements("newAction2", rewardFunctions: ["newReinforcement", "otherReinforcement", "newReinforcement"], feedbackFunctions:["feedback0"])
