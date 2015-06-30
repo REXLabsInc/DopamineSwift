@@ -1,5 +1,5 @@
 //
-//  test1.swift
+//  dopamine.swift
 //
 //
 //  Created by Ramsay on 6/18/15.
@@ -12,35 +12,41 @@ import CryptoSwift
 import SwiftyJSON
 import UIKit
 
+typealias ServiceResponse = (AnyObject?, NSError?) -> Void
 
 
-class Dopamine{
-    //declare vars
+class Dopamine: NSObject
+{
+    //declare properties for singleton Dopamine object
+    
     var credentials = [String:String]()
     var rewardFunctions = [String]()
     var feedbackFunctions = [String]()
-//    var actionPairings = [[String: [String: [String]]]]()
     var actionPairings = [AnyObject]()
     var actionNames = [String]()
     var buildID:String = ""
     var ClientOSVersion = ""
     
-    init()
-    {
-        println("in dopamine init")
-        let os = NSProcessInfo().operatingSystemVersion
-        self.ClientOSVersion = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
-        self.setConfig("53baf51d0e4f8c4e24f3ab9a", apiKey:  "5fd2292ff9ecae71f0571ee998c772ea32a20ab6",  token: "446684351423755353baf51d0e4f8c4e24f3ab9a", versionID: "newVersion")
+    //instantiate Singleton
+    class var sharedInstance:Dopamine {
+        struct Singleton {
+            static let instance = Dopamine()
+        }
+        return Singleton.instance
     }
     
+    //setConfig: pass in the credentials for your app
     func setConfig(appID: String, apiKey: String, token: String, versionID: String)
     {
+        let os = NSProcessInfo().operatingSystemVersion
+        self.ClientOSVersion = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
         self.credentials["appID"] = appID;
         self.credentials["apiKey"] = apiKey;
         self.credentials["token"] = token;
         self.credentials["versionID"] = versionID;
     }
     
+    //pairReinforcements: tell the Dopamine API which actions in your app are being reinforced and how you're going to reinforce them. Run this ONCE for each unique action you want reinforced
     func pairReinforcements (actionName: String, rewardFunctions: [String], feedbackFunctions: [String])
     {
         
@@ -52,12 +58,10 @@ class Dopamine{
         //check to make sure we're not double-counting this action
         if(find(self.actionNames, actionName) == nil)
         {
-            println("have not seen \(actionName) yet")
             self.actionNames.append(actionName)
         }
         else
         {
-            println("I've already added \(actionName)")
             haventSeenAction = false
         }
         
@@ -66,12 +70,7 @@ class Dopamine{
         {
             if(find(self.rewardFunctions, thisFunction) == nil)
             {
-                println("have not seen \(thisFunction) yet")
                 self.rewardFunctions.append(thisFunction)
-            }
-            else
-            {
-                println("I've already added \(thisFunction)")
             }
             
             if(find(uniqueRewards, thisFunction) == nil)
@@ -85,12 +84,7 @@ class Dopamine{
         {
             if(find(self.feedbackFunctions, thisFunction) == nil)
             {
-                println("have not seen \(thisFunction) yet")
                 self.feedbackFunctions.append(thisFunction)
-            }
-            else
-            {
-                println("I've already added \(thisFunction)")
             }
             
             if(find(uniqueFeedbacks, thisFunction) == nil)
@@ -117,20 +111,14 @@ class Dopamine{
 
             var newActionPairing = ["actionName":actionName, "reinforcers":reinforcers]
             self.actionPairings.append(newActionPairing)
-
-        }
-        else
-        {
-            println("This is NOT first time that pairReinforcements has been called for \(actionName)")
         }
         
     }
     
-    func buildPayload(callType: String, eventName: String, identity: [[String:String]]) -> ()
+    func buildPayload(callType: String, eventName: String, identity: [[String:String]]) -> [String: AnyObject]
     {
         //calculate build
         self.buildID = self.actionPairings.description.sha1()!
-        println(self.buildID)
         var timeNow = NSDate().timeIntervalSince1970 * 1000
         var appID = self.credentials["appID"]!
         
@@ -158,44 +146,35 @@ class Dopamine{
             parameters["eventName"] = eventName
         }
         
-        println(parameters)
-        
-        //send API call
-        var request = Alamofire.request(.POST, "https://staging.usedopamine.com/v2/app/\(appID)/\(callType)/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
-            if(callType == "reinforce")
-            {
-                self.handleReinforceResponse(JSON!)
-            }
-            else
-            {
-                println(JSON)
-                
-            }
+        return parameters
+    }
+
+    
+    func initialize(eventName: String, identity: [[String:String]], onCompletion: ServiceResponse) -> Void
+    {
+        var parameters = buildPayload("init", eventName: eventName, identity: identity)
+        var appID = self.credentials["appID"]!
+        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/init/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
+            onCompletion(JSON, nil)
         }
-        
-        parameters = [String: AnyObject]()
-        
-        return ()
     }
     
-    func initialize()
+    func track(eventName: String, identity: [[String:String]], onCompletion: ServiceResponse) -> Void
     {
-        buildPayload("init", eventName: "init", identity: [["user":"INIT"]])
+        var parameters = buildPayload("track", eventName: eventName, identity: identity)
+        var appID = self.credentials["appID"]!
+        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/track/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
+            onCompletion(JSON, nil)
+        }
     }
     
-    func track(eventName: String, identity: [[String:String]])
+    func reinforce(eventName: String, identity: [[String:String]], onCompletion: ServiceResponse) -> Void
     {
-        buildPayload("track", eventName: eventName, identity: identity)
+        var parameters = buildPayload("reinforce", eventName: eventName, identity: identity)
+        var appID = self.credentials["appID"]!
+        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/reinforce/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
+            onCompletion(JSON, nil)
+        }
     }
-    
-    func reinforce(eventName: String, identity: [[String:String]])
-    {
-        buildPayload("reinforce", eventName: eventName, identity: identity)
-    }
-    
-    func handleReinforceResponse(jsonResponse: AnyObject) -> ()
-    {
-        println("in handleResponse")
-        println(jsonResponse)
-    }
+
 }

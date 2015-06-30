@@ -76,9 +76,17 @@
                                     <action selector="reinforceButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ydz-Ao-7es"/>
                                 </connections>
                             </button>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="click Reinforce" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hKx-J5-A6r">
+                                <rect key="frame" x="31" y="285" width="288" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="apiResponse" destination="hKx-J5-A6r" id="v00-Tb-Pxr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
