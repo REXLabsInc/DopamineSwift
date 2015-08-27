@@ -1,0 +1,2 @@
+podspec
+use_frameworks!
