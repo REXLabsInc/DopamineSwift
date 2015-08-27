@@ -10,7 +10,6 @@ import Foundation
 import Alamofire
 import CryptoSwift
 import SwiftyJSON
-import UIKit
 
 typealias ServiceResponse = (AnyObject?, NSError?) -> Void
 
