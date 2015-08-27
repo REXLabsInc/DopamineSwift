@@ -10,6 +10,7 @@
 		6349B1BF1B8FBB7B00F2B44B /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6349B1C51B8FBB7B00F2B44B /* Dopamine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6349B1B91B8FBB7B00F2B44B /* Dopamine.framework */; };
 		6349B1CC1B8FBB7B00F2B44B /* DopamineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */; };
+		63DB3B011B8FCCD60037705E /* Dopamine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB3B001B8FCCD60037705E /* Dopamine.swift */; };
 		F2CBA140E85D69F3FD735046 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506B0220F1F6A4B2C0BC175E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
@@ -32,6 +33,7 @@
 		6349B1C41B8FBB7B00F2B44B /* DopamineTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DopamineTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6349B1CA1B8FBB7B00F2B44B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DopamineTests.swift; sourceTree = "<group>"; };
+		63DB3B001B8FCCD60037705E /* Dopamine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dopamine.swift; sourceTree = "<group>"; };
 		E1D4D45E97DE855ACDABAC29 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -95,6 +97,7 @@
 		6349B1BB1B8FBB7B00F2B44B /* Dopamine */ = {
 			isa = PBXGroup;
 			children = (
+				63DB3B001B8FCCD60037705E /* Dopamine.swift */,
 				6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */,
 				6349B1BC1B8FBB7B00F2B44B /* Supporting Files */,
 			);
@@ -268,6 +271,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63DB3B011B8FCCD60037705E /* Dopamine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
