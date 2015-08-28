@@ -23,7 +23,7 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 
-#import <Cocoa/Cocoa.h>
+#import <Foundation/Foundation.h>
 
 FOUNDATION_EXPORT double DopamineVersionNumber;
 FOUNDATION_EXPORT const unsigned char DopamineVersionString[];
