@@ -1,179 +1,75 @@
 //
-//  dopamine.swift
+//  Dopamine.swift
 //
+//  Copyright (c) 2015 Dopamine Labs
 //
-//  Created by Ramsay on 6/18/15.
+//  Released under The MIT License (MIT)
 //
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
 //
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
 
 import Foundation
 import Alamofire
 import CryptoSwift
 import SwiftyJSON
 
-typealias ServiceResponse = (AnyObject?, NSError?) -> Void
+public typealias Settings = (appID: String, apiKey: String, token: String, versionID: String, pairings: ActionPairings)
 
+/**
+    :param: name The name of the action the user takes that should be rewarded
+    :param: rewards The possible rewards a user could be presented with
+    :param: feedback Neutral feedback to present when the user isn't being rewarded
+*/
+public typealias ActionPairing = (name: String, rewards: Set<String>, feedback: Set<String>)
 
-class Dopamine: NSObject
-{
-    //declare properties for singleton Dopamine object
-    
-    var credentials = [String:String]()
-    var rewardFunctions = [String]()
-    var feedbackFunctions = [String]()
-    var actionPairings = [AnyObject]()
-    var actionNames = [String]()
-    var buildID:String = ""
-    var ClientOSVersion = ""
-    
-    //instantiate Singleton
-    class var sharedInstance:Dopamine {
-        struct Singleton {
-            static let instance = Dopamine()
-        }
-        return Singleton.instance
-    }
-    
-    //setConfig: pass in the credentials for your app
-    func setConfig(appID: String, apiKey: String, token: String, versionID: String)
-    {
-        let os = NSProcessInfo().operatingSystemVersion
-        self.ClientOSVersion = "\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"
-        self.credentials["appID"] = appID;
-        self.credentials["apiKey"] = apiKey;
-        self.credentials["token"] = token;
-        self.credentials["versionID"] = versionID;
-    }
-    
-    //pairReinforcements: tell the Dopamine API which actions in your app are being reinforced and how you're going to reinforce them. Run this ONCE for each unique action you want reinforced
-    func pairReinforcements (actionName: String, rewardFunctions: [String], feedbackFunctions: [String])
-    {
-        
-        //check actions, reward functions, feedback functions, pair.
-        var haventSeenAction = true
-        var uniqueRewards = [String]()
-        var uniqueFeedbacks = [String]()
-        
-        //check to make sure we're not double-counting this action
-        if(find(self.actionNames, actionName) == nil)
-        {
-            self.actionNames.append(actionName)
-        }
-        else
-        {
-            haventSeenAction = false
-        }
-        
-        //check to make sure we're not double-counting this feedback function
-        for thisFunction in rewardFunctions
-        {
-            if(find(self.rewardFunctions, thisFunction) == nil)
-            {
-                self.rewardFunctions.append(thisFunction)
-            }
-            
-            if(find(uniqueRewards, thisFunction) == nil)
-            {
-                uniqueRewards.append(thisFunction)
-            }
-        }
-        
-        //check to make sure we're not double-counting this reward function
-        for thisFunction in feedbackFunctions
-        {
-            if(find(self.feedbackFunctions, thisFunction) == nil)
-            {
-                self.feedbackFunctions.append(thisFunction)
-            }
-            
-            if(find(uniqueFeedbacks, thisFunction) == nil)
-            {
-                uniqueFeedbacks.append(thisFunction)
-            }
-        }
-        
-        if(haventSeenAction)
-        {
+typealias PairingDictionary = [String:ActionPairing]
 
-            var reinforcers = [[String:AnyObject]]()
-            for thisFunction in uniqueRewards
-            {
-                var newReinforcer = ["functionName": thisFunction, "type":"Reward", "constraint":[], "objective":[]]
-                reinforcers.append(newReinforcer)
+/// A non-canonical dictionary of ActionPairing objects
+public class ActionPairings {
+    var store = PairingDictionary()
+    public var buildID : String {
+        get {
+            var bid = ""
+            for (name, pairing) in store {
+                bid += pairing.name
+                bid += reduce(pairing.rewards,"",+)
+                bid += reduce(pairing.feedback,"",+)
             }
-            
-            for thisFunction in uniqueFeedbacks
-            {
-                var newReinforcer = ["functionName": thisFunction, "type":"Feedback", "constraint":[], "objective":[]]
-                reinforcers.append(newReinforcer)
-            }
+            return bid
+        }
+    }
+    
+    public init() {}
+    
+    /**
+        Adds an action pairing to be used with this build of Dopamine
+    
+        :param: pairing The pairing of actions to be added
+    */
+    public func add(pairing : ActionPairing) {
+        self.store[pairing.name] = pairing
+    }
+}
 
-            var newActionPairing = ["actionName":actionName, "reinforcers":reinforcers]
-            self.actionPairings.append(newActionPairing)
-        }
-        
-    }
+class Dopamine {
+    let s : Settings
     
-    func buildPayload(callType: String, eventName: String, identity: [[String:String]]) -> [String: AnyObject]
-    {
-        //calculate build
-        self.buildID = self.actionPairings.description.sha1()!
-        var timeNow = NSDate().timeIntervalSince1970 * 1000
-        var appID = self.credentials["appID"]!
-        
-        var parameters:[String: AnyObject] = [
-            "token": self.credentials["token"]!,
-            "versionID": self.credentials["versionID"]!,
-            "key":self.credentials["apiKey"]!,
-            "build": self.buildID,
-            "UTC":  timeNow,
-            "localTime": timeNow,
-            "ClientOS":"Swift",
-            "ClientOSVersion": self.ClientOSVersion,
-            "ClientAPIVersion":"0.1.0",
-            "identity": identity
-        ]
-        
-        if(callType == "init")
-        {
-            parameters["rewardFunctions"] = self.rewardFunctions
-            parameters["feedbackFunctions"] = self.feedbackFunctions
-            parameters["actionPairings"] = self.actionPairings
-        }
-        else if(callType == "reinforce" || callType == "track")
-        {
-            parameters["eventName"] = eventName
-        }
-        
-        return parameters
+    init(settings : Settings) {
+        self.s = settings
     }
-
-    
-    func initialize(eventName: String, identity: [[String:String]], onCompletion: ServiceResponse) -> Void
-    {
-        var parameters = buildPayload("init", eventName: eventName, identity: identity)
-        var appID = self.credentials["appID"]!
-        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/init/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
-            onCompletion(JSON, nil)
-        }
-    }
-    
-    func track(eventName: String, identity: [[String:String]], onCompletion: ServiceResponse) -> Void
-    {
-        var parameters = buildPayload("track", eventName: eventName, identity: identity)
-        var appID = self.credentials["appID"]!
-        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/track/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
-            onCompletion(JSON, nil)
-        }
-    }
-    
-    func reinforce(eventName: String, identity: [[String:String]], onCompletion: ServiceResponse) -> Void
-    {
-        var parameters = buildPayload("reinforce", eventName: eventName, identity: identity)
-        var appID = self.credentials["appID"]!
-        Alamofire.request(.POST, "https://api.usedopamine.com/v2/app/\(appID)/reinforce/", parameters: parameters, encoding: .JSON).responseJSON { (_, _, JSON, _) in
-            onCompletion(JSON, nil)
-        }
-    }
-
 }

@@ -11,6 +11,8 @@
 		6349B1BF1B8FBB7B00F2B44B /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6349B1C51B8FBB7B00F2B44B /* Dopamine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6349B1B91B8FBB7B00F2B44B /* Dopamine.framework */; };
 		6349B1CC1B8FBB7B00F2B44B /* DopamineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */; };
+		637A34161B91017E00F31174 /* ActionPairings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637A34151B91017E00F31174 /* ActionPairings.swift */; };
+		637A34171B91017E00F31174 /* ActionPairings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 637A34151B91017E00F31174 /* ActionPairings.swift */; };
 		63A3743E1B8FFDC400B39CB9 /* Dopamine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A374331B8FFDC400B39CB9 /* Dopamine.framework */; };
 		63A3744C1B9008AD00B39CB9 /* Dopamine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB3B001B8FCCD60037705E /* Dopamine.swift */; };
 		63A3744D1B9008AD00B39CB9 /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; };
@@ -45,6 +47,7 @@
 		6349B1C41B8FBB7B00F2B44B /* Dopamine OSX Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dopamine OSX Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6349B1CA1B8FBB7B00F2B44B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DopamineTests.swift; sourceTree = "<group>"; };
+		637A34151B91017E00F31174 /* ActionPairings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionPairings.swift; sourceTree = "<group>"; };
 		63A374331B8FFDC400B39CB9 /* Dopamine.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Dopamine.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A3743D1B8FFDC400B39CB9 /* Dopamine iOS Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Dopamine iOS Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		63A374531B900A9900B39CB9 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
@@ -152,6 +155,7 @@
 			isa = PBXGroup;
 			children = (
 				6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */,
+				637A34151B91017E00F31174 /* ActionPairings.swift */,
 				6349B1C91B8FBB7B00F2B44B /* Supporting Files */,
 			);
 			path = DopamineTests;
@@ -413,6 +417,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637A34171B91017E00F31174 /* ActionPairings.swift in Sources */,
 				6349B1CC1B8FBB7B00F2B44B /* DopamineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -429,6 +434,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				637A34161B91017E00F31174 /* ActionPairings.swift in Sources */,
 				63A374511B9008C000B39CB9 /* DopamineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
