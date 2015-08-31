@@ -1,0 +1,33 @@
+{
+    "status": 200,
+    "version": "Known Version: version0",
+    "build": "*** New Build: 3hv71ea6251aec7d6s66d56625e ***",
+    "ReinforcementDetails": {
+        "rewardFunctions": [
+                            "rf1"
+                            ],
+        "feedbackFunctions": [
+                              "ff1"
+                              ],
+        "actions": [
+                    {
+                    "eventName": "action1",
+                    "rewardFunctions": [
+                                        "rf1"
+                                        ],
+                    "feedbackFunctions": [
+                                          "ff1"
+                                          ]
+                    },
+                    {
+                    "eventName": "action2",
+                    "rewardFunctions": [
+                                        "rf1"
+                                        ],
+                    "feedbackFunctions": [
+                                          "ff1"
+                                          ]
+                    }
+                    ]
+    }
+}
