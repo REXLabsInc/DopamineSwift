@@ -223,7 +223,7 @@ public class Dopamine {
         let standardizedPayload = basePayload.merge(t)
         let requestPayload = standardizedPayload.merge(payload)
         let url = buildEndpointURL(endpoint)
-        Alamofire.request(.POST, "http://requestb.in/1g0utgz1", parameters: requestPayload, encoding: .JSON)
+        Alamofire.request(.POST, url, parameters: requestPayload, encoding: .JSON)
                  .responseJSON { _, netResponse, JSON, _ in
                     if endpoint == .Reinforce {
                         if let r = netResponse, j: AnyObject = JSON, functionName = j["reinforcementFunction"] as? String, c = callback {
