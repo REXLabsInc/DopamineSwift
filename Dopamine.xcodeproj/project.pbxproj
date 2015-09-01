@@ -744,7 +744,7 @@
 				INFOPLIST_FILE = DopamineTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine OSX Tests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine Tests Bridging Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -762,7 +762,7 @@
 				INFOPLIST_FILE = DopamineTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine OSX Tests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine Tests Bridging Header.h";
 			};
 			name = Release;
 		};
@@ -832,7 +832,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine iOS Tests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine Tests Bridging Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -852,7 +852,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine iOS Tests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "DopamineTests/Dopamine Tests Bridging Header.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

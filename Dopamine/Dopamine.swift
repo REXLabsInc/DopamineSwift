@@ -92,7 +92,7 @@ public class ActionPairings {
     /// All the action pairings registered
     var pairings : Array<[String:AnyObject]> {
         get {
-            var r = store.values.array.map({$0})
+            return store.values.array.map({apiPairingFormat($0)})
         }
     }
     
@@ -156,9 +156,16 @@ public class Dopamine {
     }()
     
     /**
-    
+        Creates a new Dopamine object which should be used for all interactions with the service
+        
+        :param: appID Provided on your Dopamine dashboard
+        :param: apiKey Provided on your Dopamine dashboard
+        :param: token Provided on your Dopamine dashboard
+        :param: versionID A unique string representing the application version (such as CFBundleVersion or the build number)
+        :param: userIdentity An array of String to String pairings that uniquely identify the user
+        :param: pairings An ActionPairings object representing all possible action pairings for this build
     */
-    init(appID: String, apiKey : String, token : String, versionID : String, userIdentity: [[String:String]], pairings : ActionPairings) {
+    public init(appID: String, apiKey : String, token : String, versionID : String, userIdentity: [[String:String]], pairings : ActionPairings) {
         s = Settings(appID, apiKey, token, versionID, pairings)
         identity = userIdentity
         basePayload = [
@@ -180,7 +187,6 @@ public class Dopamine {
         let payload : APIPayload = [
             "feedbackFunctions": s.pairings.feedbackFunctions,
             "rewardFunctions": s.pairings.rewardFunctions,
-            "actionPairings": s.pairings.pairings.map({apiPairingFormat($0)})
         ]
         request(.Init, payload: payload)
     }
@@ -217,7 +223,7 @@ public class Dopamine {
         let standardizedPayload = basePayload.merge(t)
         let requestPayload = standardizedPayload.merge(payload)
         let url = buildEndpointURL(endpoint)
-        Alamofire.request(.POST, url, parameters: requestPayload, encoding: .JSON)
+        Alamofire.request(.POST, "http://requestb.in/1g0utgz1", parameters: requestPayload, encoding: .JSON)
                  .responseJSON { _, netResponse, JSON, _ in
                     if endpoint == .Reinforce {
                         if let r = netResponse, j: AnyObject = JSON, functionName = j["reinforcementFunction"] as? String, c = callback {

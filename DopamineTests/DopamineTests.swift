@@ -32,21 +32,21 @@ import Dopamine
 class DopamineSpec : QuickSpec {
     override func spec() {
         beforeSuite{
-            LSNoscilla.sharedInstance().start()
+            LSNocilla.sharedInstance().start()
         }
         
         afterSuite{
-            LSNoscilla.sharedInstance().stop()
+            LSNocilla.sharedInstance().stop()
         }
         
         afterEach {
-            LSNoscilla.sharedInstance().clearStubs()
+            LSNocilla.sharedInstance().clearStubs()
         }
         
         describe("Dopamine") {
             context("Initialization") {
                 it("initializes for the first time") {
-                    
+                    // TODO: Figure out a better testing Framework
                 }
             }
         }
