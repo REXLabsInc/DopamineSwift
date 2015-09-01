@@ -140,7 +140,7 @@ public class Dopamine {
     // Pre-defined
     let apiBaseURL = "https://api.usedopamine.com:443/v2/app"
     // Version of the current bundle
-    let bundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
+    let bundleVersion = NSBundle.mainBundle().infoDictionary?["CFBundleShortVersionString"] as? String
     // Pragma marks to define operating system based on http://stackoverflow.com/a/24065534
     #if os(iOS)
         let os = "Swift - iOS"
@@ -175,7 +175,7 @@ public class Dopamine {
             "build" : s.pairings.buildID,
             "ClientOS" : os,
             "ClientVersion": osVersion,
-            "ClientAPIVersion": bundleVersion,
+            "ClientAPIVersion": bundleVersion ?? "Invalid Version Number",
             "identity": userIdentity
         ]
     }

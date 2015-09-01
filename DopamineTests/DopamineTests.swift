@@ -49,6 +49,23 @@ class DopamineSpec : QuickSpec {
                     // TODO: Figure out a better testing Framework
                 }
             }
+            
+            context("Reinforcement") {
+                it("should handle callbacks correctly") {
+                    let apiKey = "abcdefg1234567"
+                    let json = "{\n\"status\": 200,\n\"reinforcementFunction\": \"rf1\"\n}"
+                    stubRequest("POST", "https://api.usedopamine.com:443/v2/app/\(apiKey)/reinforce").andReturn(200)
+                        .withBody(json)
+                    let ap = ActionPairings()
+                    ap.add("action1", rewards: ["rf1"], feedback: ["ff1"])
+                    let d = Dopamine(appID: "129420913", apiKey: apiKey, token: "130941309481", versionID: "129301", userIdentity: [["id": "1293"]], pairings: ap)
+                    var e = ""
+                    d.reinforce("action1", callback: {(s,f) in
+                        e = f
+                    })
+                    expect(e).toEventually(equal("rf1"), timeout: 3)
+                }
+            }
         }
     }
 }
