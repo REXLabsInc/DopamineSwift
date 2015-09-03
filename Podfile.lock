@@ -1,0 +1,25 @@
+PODS:
+  - Alamofire (1.2.3)
+  - CryptoSwift (0.0.13)
+  - Nimble (1.0.0)
+  - Nocilla (0.10.0)
+  - Quick (0.3.1)
+  - SwiftyJSON (2.2.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 1.2.3)
+  - CryptoSwift (~> 0.0.11)
+  - Nimble (~> 1.0.0)
+  - Nocilla
+  - Quick (~> 0.3.0)
+  - SwiftyJSON (~> 2.2.0)
+
+SPEC CHECKSUMS:
+  Alamofire: 5550bf0b575ed1a4bf9be572f9463e1015cc169e
+  CryptoSwift: 33e2ba400d514a054c69e9f9f6c08a992e42f91c
+  Nimble: 8bee528e5fcc403653076545db562d2b5db7bb87
+  Nocilla: ae0a2b05f3087b473624ac2b25903695df51246a
+  Quick: 824572d3d198d51e52cf4aa722cebf7e59952a35
+  SwiftyJSON: ae2d0a3d68025d136602a33c4ee215091ced3e33
+
+COCOAPODS: 0.38.2
