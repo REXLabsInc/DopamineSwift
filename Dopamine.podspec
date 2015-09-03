@@ -15,7 +15,7 @@ Pod::Spec.new do |s|
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.9'
 
-  s.source       = { :git => "https://github.com/DopamineLabs/DopamineAPI_Swift-Client.git" }
+  s.source       = { :git => "https://github.com/DopamineLabs/DopamineAPI_Swift-Client.git", :tag => "v#{s.version}"}
   s.source_files  = "Dopamine/*.swift"
 
   s.requires_arc = true
