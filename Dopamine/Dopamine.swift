@@ -38,7 +38,12 @@ typealias ActionPairing = (name: String, reinforcers: [Reinforcer])
 typealias PairingDictionary = [String: ActionPairing]
 /// Convenience type for the request payload
 typealias APIPayload = [String: AnyObject]
-/// Closure of the form {(statusCode, functionName) -> Void} that is provided a callback on reinforcements
+/**
+  Closure of the form {(statusCode, message) -> Void} that is provided a callback on reinforcements
+
+  Note that the given message may be an error notice, therefore your code must check the statusCode
+  to ensure that the call was succesful (it *should* be `200` in most successful circumstances)
+*/
 public typealias ReinforcementCallback = ((Int, String) -> Void)
 
 /**
@@ -192,6 +197,13 @@ public class Dopamine {
     }
     
     /**
+        Asks the Dopamine API how to handle reinforcing an action. The
+        response should be handled in the callback. Please see the
+        ReinforcementCallback documentation for details on how to
+        handle this
+        
+        :param: action The action occuring which was defined in the action pairing
+        :param: callback A callback closure which will hanlde the response (including failures)
     */
     public func reinforce(action: String, callback: ReinforcementCallback) {
         let payload: APIPayload = [
@@ -201,6 +213,9 @@ public class Dopamine {
     }
     
     /**
+        Informs the Dopamine API that some action took place
+        
+        :param: action The name of the action
     */
     public func track(action: String) {
         let payload: APIPayload = [
@@ -211,6 +226,10 @@ public class Dopamine {
     
     /**
         Handles actually making a request to Dopamine
+        
+        :param: endpoint The endpoint type to be called
+        :param: payload An APIPayload object which will be converted to JSON as the body of the request
+        :param: callback A callback closure which can handle the response if handling is needed
     */
     func request(endpoint: APIEndpoint, payload: APIPayload, callback: ReinforcementCallback? = nil) {
         let utc = NSDate().timeIntervalSince1970 * 1000.0
@@ -224,10 +243,18 @@ public class Dopamine {
         let requestPayload = standardizedPayload.merge(payload)
         let url = buildEndpointURL(endpoint)
         Alamofire.request(.POST, url, parameters: requestPayload, encoding: .JSON)
-                 .responseJSON { _, netResponse, JSON, _ in
+                 .responseJSON { _, netResponse, JSON, error in
                     if endpoint == .Reinforce {
-                        if let r = netResponse, j: AnyObject = JSON, functionName = j["reinforcementFunction"] as? String, c = callback {
-                            c(r.statusCode, functionName)
+                        switch (netResponse, JSON, error, callback) {
+                        case let (.Some(r), .Some(j), _, .Some(c)) where j["reinforcementFunction"] is String:
+                            if let functionName = j["reinforcementFunction"] as? String {
+                                c(r.statusCode,functionName)
+                            }
+                        case let (.Some(r), _, .Some(e), .Some(c)):
+                            // Returns this on error
+                            c(r.statusCode, e.localizedDescription)
+                        default:
+                            break
                         }
                     }
                  }
@@ -244,6 +271,12 @@ public class Dopamine {
     
 }
 
+/**
+    Returns an ActionPairing as a Dictionary in the format the
+    API expects
+    
+    :param: a The action pairing to be transformed
+*/
 func apiPairingFormat (a: ActionPairing) -> [String: AnyObject] {
     return [
         "actionName": a.name,
@@ -251,6 +284,12 @@ func apiPairingFormat (a: ActionPairing) -> [String: AnyObject] {
     ]
 }
 
+/**
+    Returns a Reinforcer as a Dictionary in the format the
+    API expects
+
+    :param: r The reinforcer to be transformed
+*/
 func apiReinforcerFormat (r: Reinforcer) -> [String: AnyObject] {
     return [
         "functionName": r.name,
