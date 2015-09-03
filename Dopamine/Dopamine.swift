@@ -109,10 +109,7 @@ public class ActionPairings {
                 bid += pairing.name
                 bid += reduce(pairing.reinforcers,"",{$0 + $1.name})
             }
-            if let s = bid.sha1() {
-                return s
-            }
-            return ""
+            return bid.sha1() ?? ""
         }
     }
     
