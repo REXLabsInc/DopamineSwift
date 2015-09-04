@@ -1,0 +1,3 @@
+github "Quick/Quick" ~> 0.3.0
+github "Quick/Nimble" ~> 1.0.0
+github "luisobo/Nocilla" ~> 0.10.0

@@ -24,8 +24,8 @@
 //  SOFTWARE.
 
 import Foundation
+import Crypto
 import Alamofire
-import CryptoSwift
 
 /// Generic settings for connecting to Dopamine
 typealias Settings = (appID: String, apiKey: String, token: String, versionID: String, pairings: ActionPairings)
@@ -108,7 +108,7 @@ public class ActionPairings {
                 bid += pairing.name
                 bid += reduce(pairing.reinforcers,"",{$0 + $1.name})
             }
-            return bid.sha1() ?? ""
+            return bid.SHA1 as String
         }
     }
     
