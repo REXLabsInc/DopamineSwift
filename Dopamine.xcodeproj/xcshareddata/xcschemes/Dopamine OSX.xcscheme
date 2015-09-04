@@ -20,20 +20,6 @@
                ReferencedContainer = "container:Dopamine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "NO"
-            buildForArchiving = "NO"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6349B1C31B8FBB7B00F2B44B"
-               BuildableName = "Dopamine OSX Tests.xctest"
-               BlueprintName = "Dopamine OSX Tests"
-               ReferencedContainer = "container:Dopamine.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -42,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6349B1C31B8FBB7B00F2B44B"
-               BuildableName = "Dopamine OSX Tests.xctest"
-               BlueprintName = "Dopamine OSX Tests"
-               ReferencedContainer = "container:Dopamine.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
       <MacroExpansion>
          <BuildableReference
