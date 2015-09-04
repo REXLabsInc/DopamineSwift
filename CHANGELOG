@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## 0.2.0
+
+## Changed
+
+- Use Carthage instead of CocoaPods
+- Use Crypto instead of CryptoSwift
+
 ## 0.1.1
 
 ### Fixed
