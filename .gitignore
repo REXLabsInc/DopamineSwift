@@ -28,4 +28,4 @@ xcuserdata
 *.ipa
 
 Pods/
-Carthage/Build
+Carthage/*
