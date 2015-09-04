@@ -26,7 +26,6 @@
 import Foundation
 import Alamofire
 import CryptoSwift
-import SwiftyJSON
 
 /// Generic settings for connecting to Dopamine
 typealias Settings = (appID: String, apiKey: String, token: String, versionID: String, pairings: ActionPairings)

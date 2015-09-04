@@ -22,5 +22,4 @@ Pod::Spec.new do |s|
 
   s.dependency "Alamofire", "~> 1.2.3"
   s.dependency "CryptoSwift", "~> 0.0.11"
-  s.dependency "SwiftyJSON", "~> 2.2.0"
 end
