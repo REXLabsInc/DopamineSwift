@@ -8,13 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		55B0DEF8F1DC5550B91DB128 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 506B0220F1F6A4B2C0BC175E /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
-		6349B1BF1B8FBB7B00F2B44B /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6349B1C51B8FBB7B00F2B44B /* Dopamine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6349B1B91B8FBB7B00F2B44B /* Dopamine.framework */; };
 		6349B1CC1B8FBB7B00F2B44B /* DopamineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */; };
 		63A3743E1B8FFDC400B39CB9 /* Dopamine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63A374331B8FFDC400B39CB9 /* Dopamine.framework */; };
 		63A3744C1B9008AD00B39CB9 /* Dopamine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB3B001B8FCCD60037705E /* Dopamine.swift */; };
-		63A3744D1B9008AD00B39CB9 /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; };
 		63A374511B9008C000B39CB9 /* DopamineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6349B1CB1B8FBB7B00F2B44B /* DopamineTests.swift */; };
+		63A563721B99E8BB0046DCF8 /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63A563731B99E8C30046DCF8 /* Dopamine.h in Headers */ = {isa = PBXBuildFile; fileRef = 6349B1BE1B8FBB7B00F2B44B /* Dopamine.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		63DB3B011B8FCCD60037705E /* Dopamine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63DB3B001B8FCCD60037705E /* Dopamine.swift */; };
 		63EBC37C1B951551009D112F /* subsequent_builds.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EBC37B1B951551009D112F /* subsequent_builds.json */; };
 		63EBC37D1B951551009D112F /* subsequent_builds.json in Resources */ = {isa = PBXBuildFile; fileRef = 63EBC37B1B951551009D112F /* subsequent_builds.json */; };
@@ -222,7 +222,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6349B1BF1B8FBB7B00F2B44B /* Dopamine.h in Headers */,
+				63A563731B99E8C30046DCF8 /* Dopamine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -230,7 +230,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				63A3744D1B9008AD00B39CB9 /* Dopamine.h in Headers */,
+				63A563721B99E8BB0046DCF8 /* Dopamine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
